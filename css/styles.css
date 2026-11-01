@@ -181,6 +181,14 @@ body::after {
 .section-nav ul::-webkit-scrollbar {
   display: none;
 }
+/* Center the tabs; auto margins (unlike justify-content) keep the
+   first tab reachable when the strip overflows and scrolls. */
+.section-nav li:first-child {
+  margin-left: auto;
+}
+.section-nav li:last-child {
+  margin-right: auto;
+}
 
 .section-nav a {
   display: block;
