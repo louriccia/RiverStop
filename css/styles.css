@@ -1,0 +1,488 @@
+:root {
+  --bg: #17112a;
+  --bg-deep: #0d0a18;
+  --panel: rgba(25, 17, 44, 0.84);
+  --panel-border: rgba(171, 138, 232, 0.24);
+  --text: #efe9fb;
+  --muted: #bdb1d8;
+  --moon: #f2ecff;
+  --accent: #56e3c3;
+  --accent-2: #ab8ae8;
+  --gold: #d8b46e;
+  /* Section title plaque */
+  --plaque: #7b5cc4;
+  --plaque-ink: #f6f1ff;
+  --plaque-outline: #e2d5fa;
+  --plaque-line: #ab8ae8;
+
+  --font-display: "Cinzel", Georgia, serif;
+  --font-body: "Cormorant Garamond", Georgia, serif;
+
+  --nav-height: 56px;
+  --max-width: 960px;
+  --scene-width: 1280px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 12px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+/* Fixed scenery layer, centered with feathered side edges that fade into the
+   gradient below. A pseudo-element is used instead of
+   background-attachment: fixed, which iOS Safari ignores. */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(100%, var(--scene-width));
+  transform: translateX(-50%);
+  z-index: -1;
+  background:
+    linear-gradient(180deg,
+      rgba(8, 18, 15, 0.25) 0%,
+      rgba(8, 18, 15, 0.55) 35%,
+      rgba(8, 18, 15, 0.8) 70%,
+      rgba(8, 18, 15, 0.9) 100%),
+    url("../images/background.webp") center top / cover no-repeat;
+}
+
+/* Only feather the edges when the window is wider than the scenery. */
+@media (min-width: 1281px) {
+  body::before {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  }
+}
+
+/* Full-window gradient behind the scenery column, sampled from the photo's
+   edges (teal sky, forest green, night) and fading darker toward the sides. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg,
+      rgba(5, 12, 10, 0.55) 0%,
+      transparent 30%,
+      transparent 70%,
+      rgba(5, 12, 10, 0.55) 100%),
+    linear-gradient(180deg,
+      #124249 0%,
+      #0d3a3a 12%,
+      #12302b 26%,
+      #12291f 42%,
+      #0f1b15 62%,
+      #0d1712 80%,
+      #0a130f 100%);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  z-index: 100;
+  padding: 8px 12px;
+  background: var(--moon);
+  color: var(--bg);
+}
+
+/* Hero */
+
+.hero {
+  text-align: center;
+  padding: 56px 16px 40px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+}
+
+.moon {
+  width: 64px;
+  height: 64px;
+  fill: var(--moon);
+  filter: drop-shadow(0 0 18px rgba(171, 138, 232, 0.6));
+}
+
+.eyebrow {
+  margin: 16px 0 4px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 9vw, 4.5rem);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  color: var(--moon);
+  text-shadow: 0 0 24px rgba(171, 138, 232, 0.45);
+}
+
+.tagline {
+  margin: 8px 0 0;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--muted);
+}
+
+/* Section nav */
+
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(20, 13, 36, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid var(--panel-border);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.section-nav ul {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  max-width: var(--max-width);
+  height: var(--nav-height);
+  margin: 0 auto;
+  padding: 0 16px;
+  list-style: none;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.section-nav ul::-webkit-scrollbar {
+  display: none;
+}
+
+.section-nav a {
+  display: block;
+  white-space: nowrap;
+  padding: 7px 15px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s, background-color 0.2s;
+  --scoop: 6px;
+  --o: 0px;
+}
+.section-nav a:hover,
+.section-nav a:focus-visible {
+  color: var(--moon);
+}
+.section-nav a.active {
+  color: var(--bg);
+  background: var(--accent-2);
+}
+
+/* Menu */
+
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 16px 16px 48px;
+}
+
+.notice {
+  text-align: center;
+  color: var(--muted);
+}
+
+.menu-section {
+  position: relative;
+  margin-top: 28px;
+  padding: 28px 20px 12px;
+  background: var(--panel);
+  --scoop: 16px;
+  --o: 0px;
+}
+
+/* A mask would cut a normal border off at the scooped corners, so the
+   panel's 1px border is painted instead: four edges and four arcs that
+   trace the scoop. */
+.menu-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --c: var(--panel-border);
+  --s: calc(var(--scoop) + 2px);
+  --arc: #0000 calc(var(--scoop) - 0.5px), var(--c) var(--scoop), var(--c) calc(var(--scoop) + 1px), #0000 calc(var(--scoop) + 1.5px);
+  background:
+    radial-gradient(circle at 0 0, var(--arc)) top left / var(--s) var(--s) no-repeat,
+    radial-gradient(circle at 100% 0, var(--arc)) top right / var(--s) var(--s) no-repeat,
+    radial-gradient(circle at 0 100%, var(--arc)) bottom left / var(--s) var(--s) no-repeat,
+    radial-gradient(circle at 100% 100%, var(--arc)) bottom right / var(--s) var(--s) no-repeat,
+    linear-gradient(var(--c), var(--c)) top center / calc(100% - 2 * var(--scoop)) 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom center / calc(100% - 2 * var(--scoop)) 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) left center / 1px calc(100% - 2 * var(--scoop)) no-repeat,
+    linear-gradient(var(--c), var(--c)) right center / 1px calc(100% - 2 * var(--scoop)) no-repeat;
+}
+
+@media (min-width: 720px) {
+  .menu-section {
+    padding: 32px 32px 16px;
+  }
+}
+
+/* Section title: a flat plaque with scooped (concave) corners and an inset
+   outline that follows the same scoop, flanked by rules ending in diamonds. */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  flex: none;
+  max-width: 80%;
+  margin: 0;
+  padding: 8px 22px 7px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 4.5vw, 1.6rem);
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--plaque-ink);
+  background: var(--plaque);
+  position: relative;
+  isolation: isolate;
+  --scoop: 9px; /* corner scoop radius */
+  --o: 0px;     /* how far this layer is inset from the plaque edge */
+}
+
+/* The outline is a 1px ring: an outline-colored layer inset 4px, covered by
+   a plaque-colored layer inset 5px. Every layer scoops its corners from the
+   plaque's own corners, so the ring stays parallel to the edge. */
+.section-title::before,
+.section-title::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+}
+.section-title::before {
+  inset: 4px;
+  --o: 4px;
+  background: var(--plaque-outline);
+}
+.section-title::after {
+  inset: 5px;
+  --o: 5px;
+  background: var(--plaque);
+}
+
+/* Scooped-corner shape shared by plaques, section panels and nav tabs.
+   Set --scoop (corner radius) and --o (inset from the shape's outer edge). */
+.section-title,
+.section-title::before,
+.section-title::after,
+.menu-section,
+.section-nav a {
+  --r: calc(var(--scoop) + var(--o));
+  --m: calc(var(--o) * -1);
+  --p: calc(100% + var(--o));
+  -webkit-mask:
+    radial-gradient(circle at var(--m) var(--m), #0000 var(--r), #000 calc(var(--r) + 0.5px)) top left / 51% 51% no-repeat,
+    radial-gradient(circle at var(--p) var(--m), #0000 var(--r), #000 calc(var(--r) + 0.5px)) top right / 51% 51% no-repeat,
+    radial-gradient(circle at var(--m) var(--p), #0000 var(--r), #000 calc(var(--r) + 0.5px)) bottom left / 51% 51% no-repeat,
+    radial-gradient(circle at var(--p) var(--p), #0000 var(--r), #000 calc(var(--r) + 0.5px)) bottom right / 51% 51% no-repeat;
+  mask:
+    radial-gradient(circle at var(--m) var(--m), #0000 var(--r), #000 calc(var(--r) + 0.5px)) top left / 51% 51% no-repeat,
+    radial-gradient(circle at var(--p) var(--m), #0000 var(--r), #000 calc(var(--r) + 0.5px)) top right / 51% 51% no-repeat,
+    radial-gradient(circle at var(--m) var(--p), #0000 var(--r), #000 calc(var(--r) + 0.5px)) bottom left / 51% 51% no-repeat,
+    radial-gradient(circle at var(--p) var(--p), #0000 var(--r), #000 calc(var(--r) + 0.5px)) bottom right / 51% 51% no-repeat;
+}
+
+.rule {
+  flex: 1;
+  min-width: 12px;
+  height: 2px;
+  position: relative;
+}
+.rule-left {
+  background: linear-gradient(90deg, transparent, var(--plaque-line));
+}
+.rule-right {
+  background: linear-gradient(90deg, var(--plaque-line), transparent);
+}
+.rule::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  background: var(--plaque-line);
+  transform: translateY(-50%) rotate(45deg);
+}
+.rule-left::after {
+  right: 0;
+}
+.rule-right::after {
+  left: 0;
+}
+
+/* Keep titles on one line on phones. */
+@media (max-width: 480px) {
+  .section-header {
+    gap: 8px;
+  }
+  .section-title {
+    max-width: none;
+    padding: 7px 14px 6px;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+  }
+  .rule {
+    min-width: 8px;
+  }
+}
+
+/* Items sit directly on the section surface, separated by hairlines. */
+.items {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.item {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--panel-border);
+}
+.item:first-child {
+  border-top: none;
+}
+
+@media (min-width: 720px) {
+  .items {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+  }
+  .item:nth-child(2) {
+    border-top: none;
+  }
+}
+
+.item-art {
+  flex: none;
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+}
+
+.item-body {
+  min-width: 0;
+}
+
+.item-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+}
+
+.item-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.item-desc {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.tag {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.tag-flagship {
+  color: var(--gold);
+}
+.tag-spicy {
+  color: #f0a07a;
+}
+.tag-roll-d20 {
+  color: var(--accent-2);
+}
+
+/* Compact sections (e.g. zero proof) render as a tighter list */
+.compact .item {
+  padding: 12px 0;
+}
+.compact .item-art {
+  width: 52px;
+  height: 52px;
+}
+.compact .item-desc {
+  margin-top: 2px;
+}
+
+/* Footer */
+
+.site-footer {
+  text-align: center;
+  padding: 24px 16px 40px;
+  border-top: 1px solid var(--panel-border);
+  color: var(--muted);
+}
+.site-footer p {
+  margin: 4px 0;
+}
+.site-footer .fine {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .section-nav a {
+    transition: none;
+  }
+}
