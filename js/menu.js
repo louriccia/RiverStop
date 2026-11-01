@@ -15,7 +15,7 @@ const MENU = [
   {
     id: "brews",
     placeholder: "images/placeholders/brew.svg",
-    title: "Ales, Ciders & Mead",
+    title: "Tap List",
     items: [
       {
         name: "Hazelnut Stout",
@@ -55,7 +55,7 @@ const MENU = [
   {
     id: "spirits",
     placeholder: "images/placeholders/cocktail.svg",
-    title: "Spirits & Cocktails",
+    title: "Cocktails",
     items: [
       {
         name: "River Stop’s Famous Eluneshine",
