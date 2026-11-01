@@ -4,7 +4,7 @@
   --panel: rgba(25, 17, 44, 0.84);
   --panel-border: rgba(171, 138, 232, 0.24);
   --text: #efe9fb;
-  --muted: #bdb1d8;
+  --muted: #cbc1e3;
   --moon: #f2ecff;
   --accent: #56e3c3;
   --accent-2: #ab8ae8;
@@ -16,11 +16,13 @@
   --plaque-line: #ab8ae8;
 
   --font-display: "Cinzel", Georgia, serif;
-  --font-body: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Alegreya", Georgia, serif;
 
   --nav-height: 56px;
   --max-width: 960px;
   --scene-width: 1280px;
+  /* Extra dimming over the photo and the side fill (kept equal so they match) */
+  --bg-dim: rgba(8, 10, 18, 0.3);
 }
 
 *,
@@ -58,6 +60,7 @@ body::before {
   transform: translateX(-50%);
   z-index: -1;
   background:
+    linear-gradient(var(--bg-dim), var(--bg-dim)),
     linear-gradient(180deg,
       rgba(8, 18, 15, 0.25) 0%,
       rgba(8, 18, 15, 0.55) 35%,
@@ -82,6 +85,7 @@ body::after {
   inset: 0;
   z-index: -2;
   background:
+    linear-gradient(var(--bg-dim), var(--bg-dim)),
     linear-gradient(90deg,
       rgba(5, 12, 10, 0.55) 0%,
       transparent 30%,
@@ -128,10 +132,13 @@ body::after {
 .eyebrow {
   margin: 16px 0 4px;
   font-family: var(--font-display);
-  font-size: 0.8rem;
+  font-weight: 700;
+  font-size: 0.85rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--moon);
+  /* Tight dark halo so it stays legible over the bright sky */
+  text-shadow: 0 0 6px rgba(13, 10, 24, 0.95), 0 0 14px rgba(13, 10, 24, 0.8);
 }
 
 .hero h1 {
@@ -411,6 +418,11 @@ main {
   border-radius: 8px;
   border: 1px solid var(--panel-border);
 }
+/* Placeholder icons float on the panel; real art keeps its frame */
+.item-art.placeholder {
+  border: none;
+  border-radius: 0;
+}
 
 .item-body {
   min-width: 0;
@@ -438,24 +450,101 @@ main {
 }
 
 .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-family: var(--font-display);
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 2px 8px;
+  padding: 2px 9px 2px 7px;
   border-radius: 999px;
   border: 1px solid currentColor;
   color: var(--accent);
   white-space: nowrap;
 }
+/* Icon-only tag beside an item name (and in the legend) */
+.name-tail {
+  white-space: nowrap;
+}
+.item-tags {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: 8px;
+  vertical-align: -1px;
+}
+.tag-mark {
+  display: inline-flex;
+  cursor: help;
+}
+.tag-mark svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 3px currentColor);
+}
 .tag-flagship {
   color: var(--gold);
+}
+.tag-seasonal {
+  color: var(--accent);
 }
 .tag-spicy {
   color: #f0a07a;
 }
 .tag-roll-d20 {
   color: var(--accent-2);
+}
+
+/* Tag legend, shown above the first section */
+.tag-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 32px;
+  margin: 8px 0 0;
+  padding: 0;
+}
+.legend-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tag-legend dt,
+.tag-legend dd {
+  margin: 0;
+}
+.tag-legend .tag-mark {
+  cursor: default;
+}
+.tag-legend dd {
+  font-style: italic;
+  color: var(--muted);
+}
+/* One line on desktop; too narrow for that, a 2x2 grid instead of a 3+1 wrap */
+@media (min-width: 481px) and (max-width: 819px) {
+  .tag-legend {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px 40px;
+  }
+}
+@media (max-width: 480px) {
+  /* Two tidy columns of icons and meanings instead of a ragged wrap */
+  .tag-legend {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 12px;
+    max-width: 300px;
+    margin-inline: auto;
+  }
+  .legend-entry {
+    display: contents;
+  }
 }
 
 /* Compact sections (e.g. zero proof) render as a tighter list */
@@ -468,6 +557,18 @@ main {
 }
 .compact .item-desc {
   margin-top: 2px;
+}
+
+/* Wisteria cursor trail (js/cursor.js). Above the menu, below the sticky nav. */
+.cursor-petal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  pointer-events: none;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(171, 138, 232, 0.45));
+  will-change: transform, opacity;
 }
 
 /* Footer */

@@ -90,7 +90,7 @@ const MENU = [
       {
         name: "One-Way Ticket to Mother Moon",
         desc: "Your choice of beer with a shot of 100-proof Teldrassil White Lightning, bomb-shot style.",
-        tags: ["Roll d20"]
+        tags: ["Roll D20"]
       }
     ]
   },
@@ -162,3 +162,15 @@ const MENU = [
     ]
   }
 ];
+
+/*
+  Tag legend. Each tag used above gets an icon and a short meaning, shown in
+  the legend at the top of the menu. Icons: star, leaf, flame, d20.
+  A tag that isn't listed here still shows as a plain chip.
+*/
+const TAGS = {
+  "Flagship": { icon: "star", note: "House specialty" },
+  "Seasonal": { icon: "leaf", note: "Flavor changes with the season" },
+  "Spicy": { icon: "flame", note: "Brings the heat" },
+  "Roll D20": { icon: "d20", note: "Roll a D20 when you order" }
+};

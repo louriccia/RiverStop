@@ -26,7 +26,9 @@ Open `js/menu.js`. Each item looks like:
 }
 ```
 
-Tags with special colors: `Flagship`, `Spicy`, `Roll d20`. Any other tag uses the default color.
+Tags with special colors: `Flagship`, `Spicy`, `Roll D20`. Any other tag uses the default color.
+
+The `TAGS` list at the bottom of `js/menu.js` gives each tag an icon (`star`, `leaf`, `flame` or `d20`) and the meaning shown in the legend at the top of the menu. The legend only lists tags that some item actually uses.
 
 ## Previewing locally
 
