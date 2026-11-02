@@ -21,14 +21,16 @@ Open `js/menu.js`. Each item looks like:
 {
   name: "Hazelnut Stout",
   desc: "Barrel-aged stout with...",
-  tags: ["Seasonal"],                  // optional
+  tags: ["Spicy"],                     // optional
   image: "images/hazelnut-stout.webp"  // optional, add when art is ready
 }
 ```
 
 Tags with special colors: `Flagship`, `Spicy`, `Roll D20`. Any other tag uses the default color.
 
-The `TAGS` list at the bottom of `js/menu.js` gives each tag an icon (`star`, `leaf`, `flame` or `d20`) and the meaning shown in the legend at the top of the menu. The legend only lists tags that some item actually uses.
+The `TAGS` list at the bottom of `js/menu.js` gives each tag an icon (`star`, `leaf`, `flame` or `d20`) and the meaning shown in the legend at the bottom of the menu. The legend only lists tags that some item actually uses.
+
+Sections can also have an `empty` line, shown while they have no items. **Seasonal Specials** keeps one list per season under `seasons` (winter, spring, summer, autumn); the menu shows the current season's list and switches on its own (winter Dec–Feb, spring Mar–May, summer Jun–Aug, autumn Sep–Nov).
 
 ## Previewing locally
 

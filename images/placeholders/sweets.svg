@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs><filter id="glow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
-<path d="M42 60l18 40 18-40" stroke="#d8b46e"/>
-<path d="M48 72l20 0M52 82h12" stroke="#d8b46e" opacity=".45"/>
+<path d="M42 60l18 40 18-40" stroke="#ab8ae8"/>
+<path d="M48 72l20 0M52 82h12" stroke="#ab8ae8" opacity=".45"/>
 <path d="M40 60a12 12 0 0 1 4-18 16 16 0 0 1 32 0 12 12 0 0 1 4 18z" stroke="#ab8ae8"/>
-<path d="M60 18v8M56 22h8" stroke="#f2ecff"/>
+<path d="M60 18v8M56 22h8" stroke="#ffffff"/>
 </g></svg>

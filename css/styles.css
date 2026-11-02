@@ -16,11 +16,13 @@
   --plaque-line: #ab8ae8;
 
   --font-display: "Cinzel", Georgia, serif;
-  --font-body: "Alegreya", Georgia, serif;
+  --font-body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
 
   --nav-height: 56px;
   --max-width: 960px;
   --scene-width: 1280px;
+  /* How far the background drifts up over a full page scroll (js/parallax.js) */
+  --parallax-range: 120px;
   /* Extra dimming over the photo and the side fill (kept equal so they match) */
   --bg-dim: rgba(8, 10, 18, 0.3);
 }
@@ -54,10 +56,10 @@ body::before {
   content: "";
   position: fixed;
   top: 0;
-  bottom: 0;
+  bottom: calc(var(--parallax-range) * -1);
   left: 50%;
   width: min(100%, var(--scene-width));
-  transform: translateX(-50%);
+  transform: translate(-50%, var(--parallax, 0px));
   z-index: -1;
   background:
     linear-gradient(var(--bg-dim), var(--bg-dim)),
@@ -122,13 +124,6 @@ body::after {
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
 }
 
-.moon {
-  width: 64px;
-  height: 64px;
-  fill: var(--moon);
-  filter: drop-shadow(0 0 18px rgba(171, 138, 232, 0.6));
-}
-
 .eyebrow {
   margin: 16px 0 4px;
   font-family: var(--font-display);
@@ -150,6 +145,28 @@ body::after {
   line-height: 1.1;
   color: var(--moon);
   text-shadow: 0 0 24px rgba(171, 138, 232, 0.45);
+}
+
+/* The "o" in "Stop" drawn as a crescent moon, sized to the title's lowercase */
+.moon-o svg {
+  display: inline-block;
+  width: 0.57em;
+  height: 0.62em;
+  margin: 0 0.06em 0 0.08em;
+  fill: currentColor;
+  transform: scaleX(-1);
+  filter: drop-shadow(0 0 10px rgba(171, 138, 232, 0.55));
+}
+
+/* The real "o", kept inline (not absolutely positioned) so copying the title
+   gives "River Stop" on one line */
+.moon-o .visually-hidden {
+  display: inline-block;
+  width: 1px;
+  height: 1px;
+  margin-right: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 .tagline {
@@ -175,7 +192,7 @@ body::after {
 .section-nav ul {
   position: relative;
   display: flex;
-  gap: 8px;
+  gap: 4px;
   max-width: var(--max-width);
   height: var(--nav-height);
   margin: 0 auto;
@@ -200,7 +217,7 @@ body::after {
 .section-nav a {
   display: block;
   white-space: nowrap;
-  padding: 7px 15px;
+  padding: 7px 12px;
   font-family: var(--font-display);
   font-size: 0.85rem;
   letter-spacing: 0.04em;
@@ -276,6 +293,47 @@ main {
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
+}
+
+/* Section themes swap the purple palette for one section */
+.theme-harvest {
+  --panel: rgba(38, 24, 16, 0.86);
+  --panel-border: rgba(224, 164, 88, 0.3);
+  --muted: #e6d3bb;
+  --accent-2: #e8a25a;
+  --plaque: #a65a24;
+  --plaque-ink: #fff4e6;
+  --plaque-outline: #f2cf94;
+  --plaque-line: #d8a05a;
+}
+
+/* Section art on either side of the title plaque */
+.section-art {
+  flex: none;
+  width: 52px;
+  height: 52px;
+}
+.section-art-right {
+  transform: scaleX(-1);
+}
+
+/* Small line under a section title, e.g. the current season */
+.section-note {
+  margin: -8px 0 16px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+
+/* Shown in place of items when a section has none yet */
+.section-empty {
+  margin: 0 0 16px;
+  text-align: center;
+  font-style: italic;
+  color: var(--muted);
 }
 
 .section-title {
@@ -382,6 +440,37 @@ main {
   .rule {
     min-width: 8px;
   }
+  .section-art {
+    width: 34px;
+    height: 34px;
+  }
+}
+@media (max-width: 640px) {
+  /* Narrow screens: art and plaque only, so long titles still fit on one line */
+  .rule {
+    display: none;
+  }
+  .section-header {
+    justify-content: center;
+    gap: 8px;
+  }
+  .section-art {
+    width: 36px;
+    height: 36px;
+  }
+}
+@media (max-width: 360px) {
+  .section-header {
+    gap: 4px;
+  }
+  .section-art {
+    width: 22px;
+    height: 22px;
+  }
+  .section-title {
+    padding: 7px 9px 6px;
+    letter-spacing: 0.03em;
+  }
 }
 
 /* Items sit directly on the section surface, separated by hairlines. */
@@ -408,6 +497,23 @@ main {
   .item:nth-child(2) {
     border-top: none;
   }
+
+  /* flow: "columns" sections fill each column top to bottom. Every item gets
+     a hairline, and the 1px strip at the top is clipped away so the item
+     heading each column has none. */
+  .items-flow {
+    display: block;
+    column-count: 2;
+    column-gap: 40px;
+    margin-top: -1px;
+    clip-path: inset(1px 0 0 0);
+  }
+  .items-flow .item,
+  .items-flow .item:first-child,
+  .items-flow .item:nth-child(2) {
+    border-top: 1px solid var(--panel-border);
+    break-inside: avoid;
+  }
 }
 
 .item-art {
@@ -418,8 +524,8 @@ main {
   border-radius: 8px;
   border: 1px solid var(--panel-border);
 }
-/* Placeholder icons float on the panel; real art keeps its frame */
-.item-art.placeholder {
+/* Line-art icons float on the panel; illustrations keep the frame */
+.item-art[src$=".svg"] {
   border: none;
   border-radius: 0;
 }
@@ -439,13 +545,16 @@ main {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 1.05rem;
-  letter-spacing: 0.02em;
-  color: var(--text);
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(171, 138, 232, 0.35);
 }
 
 .item-desc {
-  margin: 6px 0 0;
+  margin: 8px 0 0;
+  font-size: 1rem;
+  line-height: 1.55;
   color: var(--muted);
 }
 
@@ -500,13 +609,13 @@ main {
   color: var(--accent-2);
 }
 
-/* Tag legend, shown above the first section */
+/* Tag legend, shown below the last section */
 .tag-legend {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px 32px;
-  margin: 8px 0 0;
+  margin: 28px 0 0;
   padding: 0;
 }
 .legend-entry {
@@ -545,18 +654,6 @@ main {
   .legend-entry {
     display: contents;
   }
-}
-
-/* Compact sections (e.g. zero proof) render as a tighter list */
-.compact .item {
-  padding: 12px 0;
-}
-.compact .item-art {
-  width: 52px;
-  height: 52px;
-}
-.compact .item-desc {
-  margin-top: 2px;
 }
 
 /* Wisteria cursor trail (js/cursor.js). Above the menu, below the sticky nav. */

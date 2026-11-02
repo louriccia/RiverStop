@@ -41,7 +41,8 @@
     return mark;
   }
 
-  // Legend of the tags that actually appear on the menu, in TAGS order.
+  // Legend of the tags that actually appear on the menu, in TAGS order,
+  // placed below the last section.
   function renderLegend() {
     const used = {};
     MENU.forEach(function (section) {
@@ -67,13 +68,28 @@
     main.appendChild(legend);
   }
 
+  // Placeholder icons are lilac; a themed section uses its own colored copies
+  // from images/placeholders/<theme>/ (e.g. gold for "harvest").
+  const PLACEHOLDERS = "images/placeholders/";
+  function themed(src, theme) {
+    return theme && src.indexOf(PLACEHOLDERS) === 0
+      ? PLACEHOLDERS + theme + "/" + src.slice(PLACEHOLDERS.length)
+      : src;
+  }
+
+  function sectionArt(src, side) {
+    const img = el("img", "section-art section-art-" + side);
+    img.src = src;
+    img.alt = "";
+    return img;
+  }
+
   function renderItem(item, section) {
     const article = el("article", "item");
-    const image = item.image || section.placeholder;
 
-    if (image) {
-      const img = el("img", item.image ? "item-art" : "item-art placeholder");
-      img.src = image;
+    if (item.image) {
+      const img = el("img", "item-art");
+      img.src = themed(item.image, section.theme);
       img.alt = "";
       img.loading = "lazy";
       article.appendChild(img);
@@ -106,27 +122,45 @@
     return article;
   }
 
-  renderLegend();
+  // Seasonal sections list items per season; pick the current one by month.
+  const SEASONS = ["winter", "winter", "spring", "spring", "spring", "summer",
+    "summer", "summer", "autumn", "autumn", "autumn", "winter"];
+  const season = SEASONS[new Date().getMonth()];
+  MENU.forEach(function (section) {
+    if (section.seasons) {
+      section.items = section.seasons[season] || [];
+      section.note = season.charAt(0).toUpperCase() + season.slice(1);
+    }
+    section.items = section.items || [];
+  });
 
   MENU.forEach(function (section) {
-    const sec = el("section", "menu-section" + (section.compact ? " compact" : ""));
+    const sec = el("section", "menu-section" + (section.theme ? " theme-" + section.theme : ""));
     sec.id = section.id;
     sec.setAttribute("aria-labelledby", section.id + "-title");
 
-    // Title plaque flanked by two decorative rules.
+    // Title plaque flanked by the section's art (mirrored on the right)
+    // and two decorative rules.
     const header = el("div", "section-header");
     const heading = el("h2", "section-title", section.title);
     heading.id = section.id + "-title";
     header.appendChild(el("span", "rule rule-left"));
+    if (section.art) header.appendChild(sectionArt(themed(section.art, section.theme), "left"));
     header.appendChild(heading);
+    if (section.art) header.appendChild(sectionArt(themed(section.art, section.theme), "right"));
     header.appendChild(el("span", "rule rule-right"));
     sec.appendChild(header);
+    if (section.note) sec.appendChild(el("p", "section-note", section.note));
 
-    const list = el("div", "items");
-    section.items.forEach(function (item) {
-      list.appendChild(renderItem(item, section));
-    });
-    sec.appendChild(list);
+    if (section.items.length) {
+      const list = el("div", section.flow === "columns" ? "items items-flow" : "items");
+      section.items.forEach(function (item) {
+        list.appendChild(renderItem(item, section));
+      });
+      sec.appendChild(list);
+    } else if (section.empty) {
+      sec.appendChild(el("p", "section-empty", section.empty));
+    }
     main.appendChild(sec);
 
     const li = el("li");
@@ -135,6 +169,8 @@
     li.appendChild(a);
     linkList.appendChild(li);
   });
+
+  renderLegend();
 
   // Sections are rendered after the browser tries to jump to #hash, and web fonts
   // shift the layout, so re-jump once everything has loaded.

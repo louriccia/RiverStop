@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs><filter id="glow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+<path d="M32 88C32 54 52 34 88 30c0 36-20 58-56 58z" stroke="#ab8ae8"/>
+<path d="M32 88l40-40M50 70l-2-14M50 70l14 2M62 58l-1-11M62 58l11 1" stroke="#ab8ae8" opacity=".6"/>
+<path d="M32 88l-6 8" stroke="#ab8ae8"/>
+<path d="M82 66a8 8 0 1 0 5 13 6.5 6.5 0 0 1-5-13z" stroke="#ffffff"/>
+<path d="M30 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" stroke="#ffffff" stroke-width="2"/>
+</g></svg>
