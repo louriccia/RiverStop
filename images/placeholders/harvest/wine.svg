@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs><filter id="glow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+<path d="M42 24h36c0 24-6 38-18 38S42 48 42 24z" stroke="#d8b46e"/>
+<path d="M44 38h32" stroke="#d8b46e" opacity=".7"/>
+<path d="M60 62v26M46 94h28" stroke="#d8b46e"/>
+<path d="M50 30c0 8 2 15 5 19" stroke="#ffffff" opacity=".7"/>
+<path d="M90 26l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" stroke="#ffffff" stroke-width="2"/>
+</g></svg>

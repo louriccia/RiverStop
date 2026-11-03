@@ -193,7 +193,8 @@ body::after {
   position: relative;
   display: flex;
   gap: 4px;
-  max-width: var(--max-width);
+  /* Wider than the menu so all the tabs fit on most desktop screens */
+  max-width: var(--scene-width);
   height: var(--nav-height);
   margin: 0 auto;
   padding: 0 16px;
@@ -230,6 +231,12 @@ body::after {
 .section-nav a:hover,
 .section-nav a:focus-visible {
   color: var(--moon);
+}
+/* Narrower desktops: slightly tighter tabs so all eight still fit */
+@media (max-width: 1099px) {
+  .section-nav a {
+    padding: 7px 8px;
+  }
 }
 .section-nav a.active {
   color: var(--bg);

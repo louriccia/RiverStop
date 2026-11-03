@@ -83,16 +83,35 @@ const MENU = [
         desc: "A bright, refreshing brew with a floral, peppery finish."
       },
       {
-        name: "Starlight Gose",
-        desc: "A dwarven-style sour wheat ale with a rosy color and a sparkling finish."
-      },
-      {
         name: "Dreamberry Sour",
         desc: "Made with berries imported from Val’sharah, this sour beer combines a floral-bitter flavor with the tart sweetness of blue dreamberries."
       },
       {
         name: "Lunar Pear Cider",
         desc: "Tangy and crisp, this pear cider is equal parts sweet and tart."
+      }
+    ]
+  },
+  {
+    id: "wine",
+    art: "images/placeholders/wine.svg",
+    title: "Wine Selection",
+    items: [
+      {
+        name: "Hyjal Cabernet",
+        desc: "A full-bodied, oaky red wine, aged to perfection in the temperate Hyjal climate."
+      },
+      {
+        name: "Starbreeze Chardonnay",
+        desc: "A crisp, dry white with notes of green apple, melon, and peach."
+      },
+      {
+        name: "Starlight Rosé",
+        desc: "A pale, crisp rosé with floral undertones and a faint sparkle, imported from Suramar."
+      },
+      {
+        name: "Kaluvor: Elvish Festival Wine",
+        desc: "A sweet dessert wine brewed with honey, peacebloom, and moonpetal lily nectar."
       }
     ]
   },
